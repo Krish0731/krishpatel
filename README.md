@@ -3,88 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sliding Puzzle Game</title>
+    <title>Click the Button Game</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
+            margin: 0;
+            padding: 0;
             background-color: #f4f4f4;
+            text-align: center;
         }
-        #puzzle {
-            width: 320px;
-            height: 320px;
-            margin: 50px auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-gap: 2px;
-        }
-        .tile {
-            width: 78px;
-            height: 78px;
-            background-color: #333;
-            color: white;
-            font-size: 24px;
+
+        #game-container {
+            width: 100%;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
+            position: relative;
         }
-        .empty {
-            background-color: #f4f4f4;
-            cursor: default;
+
+        #click-btn {
+            padding: 20px 40px;
+            font-size: 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        #score-board {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: red;
         }
     </style>
 </head>
 <body>
-    <h1>Sliding Puzzle Game</h1>
-    <div id="puzzle"></div>
-    <button onclick="shuffle()">Shuffle</button>
+    <div id="score-board">Score: <span id="score">0</span> | Time Left: <span id="timer">30</span>s</div>
+    <div id="game-container">
+        <button id="click-btn">Click Me!</button>
+    </div>
+
     <script>
-        const puzzle = document.getElementById('puzzle');
-        const size = 4;
-        let tiles = [];
+        let score = 0;
+        let timeLeft = 30;
+        let timer;
 
-        function createTiles() {
-            tiles = [];
-            for (let i = 0; i < size * size - 1; i++) {
-                const tile = document.createElement('div');
-                tile.classList.add('tile');
-                tile.textContent = i + 1;
-                tile.addEventListener('click', moveTile);
-                tiles.push(tile);
-            }
-            tiles.push(document.createElement('div')); // empty tile
+        // Function to start the game
+        function startGame() {
+            document.getElementById('click-btn').style.display = 'block';
+            score = 0;
+            timeLeft = 30;
+            document.getElementById('score').textContent = score;
+            document.getElementById('timer').textContent = timeLeft;
+
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert('Game Over! Final Score: ' + score);
+                    document.getElementById('click-btn').style.display = 'none';
+                }
+            }, 1000);
         }
 
-        function renderTiles() {
-            puzzle.innerHTML = '';
-            tiles.forEach(tile => {
-                tile.classList.contains('tile') ? tile.classList.remove('empty') : tile.classList.add('empty');
-                puzzle.appendChild(tile);
-            });
+        // Function to move the button randomly
+        function moveButton() {
+            const btn = document.getElementById('click-btn');
+            const maxWidth = window.innerWidth - btn.offsetWidth;
+            const maxHeight = window.innerHeight - btn.offsetHeight;
+
+            const randomX = Math.floor(Math.random() * maxWidth);
+            const randomY = Math.floor(Math.random() * maxHeight);
+
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
         }
 
-        function shuffle() {
-            for (let i = tiles.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
-            }
-            renderTiles();
-        }
+        // Event listener for button click
+        document.getElementById('click-btn').addEventListener('click', function() {
+            score++;
+            document.getElementById('score').textContent = score;
+            moveButton();
+        });
 
-        function moveTile() {
-            const index = tiles.indexOf(this);
-            const emptyIndex = tiles.indexOf(document.querySelector('.empty'));
-            const validMoves = [emptyIndex - 1, emptyIndex + 1, emptyIndex - size, emptyIndex + size];
-
-            if (validMoves.includes(index)) {
-                [tiles[index], tiles[emptyIndex]] = [tiles[emptyIndex], tiles[index]];
-                renderTiles();
-            }
-        }
-
-        createTiles();
-        renderTiles();
+        // Start the game when the page loads
+        window.onload = startGame;
     </script>
 </body>
 </html>
