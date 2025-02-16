@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Tech Blog</title>
+    <meta name="description" content="A blog about coding, tech, and software engineering.">
+    <meta name="keywords" content="blog, tech, coding, software engineering">
+    <meta name="author" content="Krish Patel">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            line-height: 1.6;
         }
 
         header {
@@ -26,7 +30,8 @@
         }
 
         main {
-            width: 80%;
+            width: 90%;
+            max-width: 1200px;
             margin: 20px auto;
             background: white;
             padding: 20px;
@@ -47,6 +52,17 @@
             color: white;
             margin-top: 20px;
         }
+
+        @media (max-width: 600px) {
+            main {
+                width: 95%;
+            }
+
+            nav a {
+                display: block;
+                margin: 10px 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -65,10 +81,10 @@
             <p>This is a blog about coding, tech, and software engineering. Stay tuned for updates!</p>
         </article>
 
-<article>
+        <article>
             <h2>How I Started Coding in High School</h2>
-            <p>Posted on <span class="date">February 16, 2025</span></p>
-            <div class="content">
+            <p>Posted on <time datetime="2025-02-16">February 16, 2025</time></p>
+            <div>
                 <p>When I first started high school, I didn’t know much about coding. I was more focused on
                 subjects like math and science, but everything changed when I took my first computer science class.
                 </p>
