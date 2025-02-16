@@ -65,11 +65,33 @@
             <p>This is a blog about coding, tech, and software engineering. Stay tuned for updates!</p>
         </article>
 
-        <article>
-            <h2>First Blog Post</h2>
+<article>
+            <h2>How I Started Coding in High School</h2>
             <p>Posted on <span class="date">February 16, 2025</span></p>
-            <p>In this post, I talk about how I started coding...</p>
-            <a href="#">Read More</a>
+            <div class="content">
+                <p>When I first started high school, I didn’t know much about coding. I was more focused on
+                subjects like math and science, but everything changed when I took my first computer science class.
+                </p>
+
+                <p>The class was an introduction to programming, and we started learning Python. At first, it felt 
+                overwhelming—there were so many concepts to grasp, like variables, loops, and functions. But once I 
+                started experimenting and writing my own code, things started to click. I realized that coding was not
+                just about writing lines of text, but about problem-solving and creating something useful.</p>
+
+                <p>One of the most exciting projects I worked on was a simple game that we built using Python. I had 
+                never thought I could create something interactive, and seeing the game come together was a huge 
+                confidence booster. After that, I knew I wanted to keep learning and eventually pursue a career in 
+                software engineering.</p>
+
+                <p>Since then, I’ve been learning more about coding through online tutorials, projects, and challenges. 
+                Now, I’m exploring other languages like JavaScript and working on building my own website. I can’t wait 
+                to see where this journey takes me!</p>
+
+                <p>So, if you're thinking about learning to code, my advice is to start small and be patient with 
+                yourself. You won’t master everything overnight, but with practice, you'll get better and gain more 
+                confidence with each project.</p>
+            </div>
+            <a href="index.html">Back to Home</a>
         </article>
     </main>
 
