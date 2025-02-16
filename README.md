@@ -3,116 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Tech Blog</title>
-    <meta name="description" content="A blog about coding, tech, and software engineering.">
-    <meta name="keywords" content="blog, tech, coding, software engineering">
-    <meta name="author" content="Krish Patel">
+    <title>Sliding Puzzle Game</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            text-align: center;
             background-color: #f4f4f4;
-            line-height: 1.6;
         }
-
-        header {
-            background: #333;
+        #puzzle {
+            width: 320px;
+            height: 320px;
+            margin: 50px auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 2px;
+        }
+        .tile {
+            width: 78px;
+            height: 78px;
+            background-color: #333;
             color: white;
-            padding: 15px;
-            text-align: center;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
         }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-        }
-
-        main {
-            width: 90%;
-            max-width: 1200px;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        article {
-            margin-bottom: 20px;
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            background: #333;
-            color: white;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 600px) {
-            main {
-                width: 95%;
-            }
-
-            nav a {
-                display: block;
-                margin: 10px 0;
-            }
+        .empty {
+            background-color: #f4f4f4;
+            cursor: default;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>My Tech Blog</h1>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-        </nav>
-    </header>
+    <h1>Sliding Puzzle Game</h1>
+    <div id="puzzle"></div>
+    <button onclick="shuffle()">Shuffle</button>
+    <script>
+        const puzzle = document.getElementById('puzzle');
+        const size = 4;
+        let tiles = [];
 
-    <main>
-        <article>
-            <h2>Welcome to My Blog</h2>
-            <p>This is a blog about coding, tech, and software engineering. Stay tuned for updates!</p>
-        </article>
+        function createTiles() {
+            tiles = [];
+            for (let i = 0; i < size * size - 1; i++) {
+                const tile = document.createElement('div');
+                tile.classList.add('tile');
+                tile.textContent = i + 1;
+                tile.addEventListener('click', moveTile);
+                tiles.push(tile);
+            }
+            tiles.push(document.createElement('div')); // empty tile
+        }
 
-        <article>
-            <h2>How I Started Coding in High School</h2>
-            <p>Posted on <time datetime="2025-02-16">February 16, 2025</time></p>
-            <div>
-                <p>When I first started high school, I didn’t know much about coding. I was more focused on
-                subjects like math and science, but everything changed when I took my first computer science class.
-                </p>
+        function renderTiles() {
+            puzzle.innerHTML = '';
+            tiles.forEach(tile => {
+                tile.classList.contains('tile') ? tile.classList.remove('empty') : tile.classList.add('empty');
+                puzzle.appendChild(tile);
+            });
+        }
 
-                <p>The class was an introduction to programming, and we started learning Python. At first, it felt 
-                overwhelming—there were so many concepts to grasp, like variables, loops, and functions. But once I 
-                started experimenting and writing my own code, things started to click. I realized that coding was not
-                just about writing lines of text, but about problem-solving and creating something useful.</p>
+        function shuffle() {
+            for (let i = tiles.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+            }
+            renderTiles();
+        }
 
-                <p>One of the most exciting projects I worked on was a simple game that we built using Python. I had 
-                never thought I could create something interactive, and seeing the game come together was a huge 
-                confidence booster. After that, I knew I wanted to keep learning and eventually pursue a career in 
-                software engineering.</p>
+        function moveTile() {
+            const index = tiles.indexOf(this);
+            const emptyIndex = tiles.indexOf(document.querySelector('.empty'));
+            const validMoves = [emptyIndex - 1, emptyIndex + 1, emptyIndex - size, emptyIndex + size];
 
-                <p>Since then, I’ve been learning more about coding through online tutorials, projects, and challenges. 
-                Now, I’m exploring other languages like JavaScript and working on building my own website. I can’t wait 
-                to see where this journey takes me!</p>
+            if (validMoves.includes(index)) {
+                [tiles[index], tiles[emptyIndex]] = [tiles[emptyIndex], tiles[index]];
+                renderTiles();
+            }
+        }
 
-                <p>So, if you're thinking about learning to code, my advice is to start small and be patient with 
-                yourself. You won’t master everything overnight, but with practice, you'll get better and gain more 
-                confidence with each project.</p>
-            </div>
-            <a href="index.html">Back to Home</a>
-        </article>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 My Tech Blog. All rights reserved.</p>
-    </footer>
+        createTiles();
+        renderTiles();
+    </script>
 </body>
 </html>
