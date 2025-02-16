@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Matching Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 120px);
+            grid-template-rows: repeat(4, 120px);
+            gap: 10px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .card {
+            width: 120px;
+            height: 120px;
+            background-color: #3498db;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            line-height: 120px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #back-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Memory Matching Game</h1>
+    <div class="game-board">
+        <!-- Game Cards go here -->
+        <div class="card">1</div>
+        <div class="card">2</div>
+        <div class="card">3</div>
+        <div class="card">4</div>
+        <!-- Add more cards for the game -->
+    </div>
+    <a id="back-btn" href="index.html">Back to Homepage</a>
+
+    <script>
+        // JavaScript for the memory matching game logic will go here
+    </script>
+</body>
+</html>
