@@ -3,23 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini 1 Chatbot</title>
+    <title>Gemini Chatbot</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; }
-        #chatbox { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; }
-        #userInput { width: 80%; padding: 5px; }
-        #sendBtn { padding: 5px; }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1e1e1e;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        #chatbox {
+            width: 400px;
+            height: 500px;
+            border-radius: 15px;
+            background: #2a2a2a;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+            font-size: 14px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .user {
+            background: #007bff;
+            align-self: flex-end;
+        }
+
+        .bot {
+            background: #444;
+            align-self: flex-start;
+        }
+
+        #inputArea {
+            display: flex;
+            margin-top: 10px;
+            width: 400px;
+        }
+
+        #userInput {
+            flex: 1;
+            padding: 10px;
+            border-radius: 25px;
+            border: none;
+            background: #333;
+            color: white;
+            outline: none;
+        }
+
+        #sendBtn {
+            background: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        #sendBtn:hover {
+            background: #0056b3;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
     <h2>Gemini Chatbot</h2>
     <div id="chatbox"></div>
-    <input type="text" id="userInput" placeholder="Type a message..." />
-    <button id="sendBtn">Send</button>
+    <div id="inputArea">
+        <input type="text" id="userInput" placeholder="Type a message...">
+        <button id="sendBtn">➤</button>
+    </div>
 
     <script>
-        const apiKey = "AIzaSyAhAoNftaX6t4d1UdjHw5foRh1Zifs7Qa8";  // Replace with your new API key
+        const apiKey = "AIzaSyAhAoNftaX6t4d1UdjHw5foRh1Zifs7Qa8";  // Replace with your API key
         const chatbox = document.getElementById("chatbox");
         const userInput = document.getElementById("userInput");
         const sendBtn = document.getElementById("sendBtn");
@@ -28,7 +104,7 @@
             let userMessage = userInput.value.trim();
             if (!userMessage) return;
 
-            chatbox.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+            addMessage("You: " + userMessage, "user");
             userInput.value = "";
 
             try {
@@ -45,21 +121,27 @@
                 });
 
                 const data = await response.json();
-                console.log("API Response:", data); // Debugging step
+                console.log("API Response:", data); 
 
                 if (data.error) {
-                    chatbox.innerHTML += `<p><strong>Bot:</strong> Error: ${data.error.message}</p>`;
+                    addMessage("Error: " + data.error.message, "bot");
                     return;
                 }
 
                 let botReply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I didn't get that.";
-                
-                chatbox.innerHTML += `<p><strong>Bot:</strong> ${botReply}</p>`;
-                chatbox.scrollTop = chatbox.scrollHeight;
+                addMessage("Bot: " + botReply, "bot");
             } catch (error) {
                 console.error("Error:", error);
-                chatbox.innerHTML += `<p><strong>Bot:</strong> Error getting response.</p>`;
+                addMessage("Error getting response.", "bot");
             }
+        }
+
+        function addMessage(text, sender) {
+            let messageElement = document.createElement("p");
+            messageElement.textContent = text;
+            messageElement.classList.add("message", sender);
+            chatbox.appendChild(messageElement);
+            chatbox.scrollTop = chatbox.scrollHeight;
         }
 
         sendBtn.addEventListener("click", sendMessage);
