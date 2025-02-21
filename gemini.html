@@ -188,13 +188,16 @@ body {
 <body>
 
     <div id="chatContainer">
-        <div id="chatbox"></div>
-        <div id="inputArea">
-            <input type="text" id="userInput" placeholder="Type a message...">
-            <button id="sendBtn">➤</button>
-            
-        </div>
+    <div id="chatbox">
+        <div class="message bot">Hello! How can I assist you today?</div>
+        <div class="message user">Hi, I need help with my account.</div>
+        <div class="typing">Bot is typing</div>
     </div>
+    <div id="inputArea">
+        <input type="text" id="userInput" placeholder="Type your message...">
+        <button id="sendBtn">Send</button>
+    </div>
+</div>
 
     <script>
         const apiKey = "AIzaSyAhAoNftaX6t4d1UdjHw5foRh1Zifs7Qa8"; // Replace with your Gemini API key
