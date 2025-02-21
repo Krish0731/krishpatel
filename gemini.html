@@ -6,208 +6,204 @@
     <title>AI Chatbot</title>
 </head>
 <style>
-/* Global Reset and Body Setup */
+/* General Styles */
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+    background: #1e1e1e; /* Single solid background color */
+    color: #fff;
     margin: 0;
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: #0d1117;
-    color: #fff;
-    overflow: hidden;
     flex-direction: column;
-    animation: gradientBg 10s ease-in-out infinite;
+    overflow: hidden; /* Prevent scrolling */
 }
 
-/* Ultra-Futuristic Animated Background Gradient */
-@keyframes gradientBg {
-    0% { background: #0d1117; }
-    50% { background: linear-gradient(135deg, #5a64e4, #00b2ff); }
-    100% { background: #0d1117; }
-}
-
-/* Chat Container - Ultra-Glassmorphism + 3D Effect */
+/* Chat Container */
 #chatContainer {
-    width: 90%;
-    max-width: 780px;
-    height: 85vh;
+    width: 70%; /* Restrict width to the center */
+    max-width: 800px; /* Maximum width of chat */
+    height: 80vh; /* Restricted height */
     display: flex;
     flex-direction: column;
-    border-radius: 24px;
+    border-radius: 16px;
     overflow: hidden;
-    background: rgba(22, 27, 34, 0.8);
-    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(30px);
-    position: relative;
-    animation: slideInContainer 1s ease-out forwards;
+    background: #161b22; /* Dark background for the chat */
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5); /* Add a shadow to make it pop */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
 }
 
-/* Chatbox Smooth Scroll with Custom Styling */
+/* Chat Messages */
 #chatbox {
     flex: 1;
-    padding: 24px;
+    padding: 20px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
-    animation: fadeInChatbox 0.8s ease-out;
+    gap: 15px;
 }
 
-/* Message Bubbles - 3D Glow + Hover Effects */
+/* Chat Bubbles */
 .message {
-    padding: 16px 22px;
-    border-radius: 20px;
+    padding: 12px 16px;
+    border-radius: 16px;
     max-width: 80%;
     word-wrap: break-word;
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease-in-out;
     position: relative;
-    transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.8);
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.message.user {
-    background: linear-gradient(145deg, #007bff, #0056b3);
+.user {
+    background: #007bff;
     align-self: flex-end;
     color: white;
-    box-shadow: 0px 8px 24px rgba(0, 123, 255, 0.6);
-    transform: translateY(8px);
+    border-bottom-right-radius: 4px;
+    box-shadow: 0px 4px 12px rgba(0, 123, 255, 0.3);
 }
 
-.message.bot {
-    background: linear-gradient(145deg, #2a2d32, #1e2125);
+.bot {
+    background: #2a2d32;
     align-self: flex-start;
-    color: #c0c0c0;
-    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.6);
-    transform: translateY(8px);
+    border-bottom-left-radius: 4px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.message:hover {
-    transform: translateX(6px) scale(1.05);
-    opacity: 0.95;
-}
-
-/* Typing Indicator - Glowing Dots + Animation */
+/* Typing Indicator */
 .typing {
-    background: rgba(30, 34, 40, 0.9);
+    background: #2a2d32;
     align-self: flex-start;
-    padding: 12px 18px;
-    border-radius: 16px;
+    padding: 8px 12px;
+    border-radius: 12px;
     font-style: italic;
     color: #a1a1a1;
-    font-size: 15px;
+    font-size: 13px;
     display: flex;
     align-items: center;
     gap: 6px;
-    animation: typingPulse 1.5s ease-in-out infinite;
 }
 
 .typing::after {
-    content: " • • • ";
-    font-size: 18px;
-    letter-spacing: 3px;
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: #a1a1a1;
+    border-radius: 50%;
     animation: typingDots 1.5s infinite;
 }
 
-/* Typing Dots Animation */
 @keyframes typingDots {
     0%, 20% { opacity: 0; }
     50% { opacity: 1; }
     100% { opacity: 0; }
 }
 
-/* Animation for Chatbox Fade-In */
-@keyframes fadeInChatbox {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Animation for Chat Container Slide-In */
-@keyframes slideInContainer {
-    from { opacity: 0; transform: translateY(50px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Chat Input Area with Hover and Focus Glow Effects */
+/* Chat Input Area */
 #inputArea {
     display: flex;
-    padding: 20px;
-    background: rgba(22, 27, 34, 0.9);
-    border-top: 2px solid rgba(255, 255, 255, 0.3);
-    gap: 18px;
-    transition: transform 0.2s ease;
+    padding: 16px;
+    background: #161b22;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 12px;
 }
 
-#inputArea:hover {
-    transform: scale(1.02);
-}
-
-/* Input Field with Glowing Border + Focus */
 #userInput {
     flex: 1;
-    padding: 16px;
-    border-radius: 16px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    background: rgba(13, 17, 23, 0.9);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(13, 17, 23, 0.8);
     color: white;
     outline: none;
-    font-size: 15px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 #userInput:focus {
-    border-color: #00b2ff;
-    box-shadow: 0px 0px 20px rgba(0, 178, 255, 0.7);
+    border-color: #007bff;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.4);
 }
 
-/* Send Button with 3D Hover + Glowing Pulse */
 #sendBtn {
-    background: linear-gradient(145deg, #007bff, #0056b3);
+    background: linear-gradient(135deg, #007bff, #0056b3);
     border: none;
     color: white;
-    padding: 16px 24px;
-    border-radius: 16px;
+    padding: 12px 20px;
+    border-radius: 12px;
     cursor: pointer;
-    font-size: 16px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    font-size: 14px;
+    transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0px 6px 24px rgba(0, 123, 255, 0.5);
-    animation: glowing 1.5s ease-in-out infinite alternate;
 }
 
 #sendBtn:hover {
-    transform: scale(1.1);
-    box-shadow: 0px 8px 30px rgba(0, 123, 255, 0.7);
-    filter: brightness(1.2);
+    transform: scale(1.05);
+    box-shadow: 0px 4px 12px rgba(0, 123, 255, 0.4);
 }
 
-/* Glowing Animation for Button */
-@keyframes glowing {
-    0% { box-shadow: 0px 0px 20px rgba(0, 123, 255, 0.5); }
-    100% { box-shadow: 0px 0px 30px rgba(0, 123, 255, 1); }
-}
-
-/* Scrollbar with Glowing Effect */
+/* Scrollbar Styling */
 #chatbox::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
 }
 
 #chatbox::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
 }
 
 #chatbox::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.1);
 }
 
+/* Fade-In Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hover Effects for Messages */
+.message:hover {
+    transform: translateX(5px);
+    opacity: 0.9;
+}
+
+/* Glow Effect for Chat Container */
+#chatContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 16px;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+}
+
+/* Computer Screen-like Styling */
+#chatContainer {
+    margin: auto;
+    width: 60%;
+    height: 80vh;
+    max-width: 800px;
+    background-color: #181a1b; /* Computer screen background color */
+    border-radius: 10px;
+    border: 2px solid #333;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* Dark shadow for computer screen effect */
+}
+
+#chatbox {
+    height: 70%;
+    overflow-y: auto;
+    padding: 20px;
+    font-family: 'Courier New', monospace; /* Monospace font for a more "computer" feel */
+}
 
 </style>
 <body>
