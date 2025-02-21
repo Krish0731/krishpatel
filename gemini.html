@@ -22,9 +22,9 @@ body {
 
 /* Chat Container */
 #chatContainer {
-    width: 70%; /* Restrict width to the center */
-    max-width: 800px; /* Maximum width of chat */
-    height: 80vh; /* Restricted height */
+    width: 90%; /* Make the chat container wide, filling most of the screen */
+    max-width: 1200px; /* Max width for larger screens */
+    height: 90vh; /* Make the chat container tall, taking up most of the screen */
     display: flex;
     flex-direction: column;
     border-radius: 16px;
@@ -186,12 +186,12 @@ body {
     pointer-events: none;
 }
 
-/* Computer Screen-like Styling */
+/* Full-screen Chat Area */
 #chatContainer {
     margin: auto;
-    width: 60%;
-    height: 80vh;
-    max-width: 800px;
+    width: 100%; /* Make the chat container full width */
+    height: 90vh; /* Take up most of the screen */
+    max-width: 1000px; /* Ensure it doesn’t stretch too much */
     background-color: #181a1b; /* Computer screen background color */
     border-radius: 10px;
     border: 2px solid #333;
@@ -199,12 +199,19 @@ body {
 }
 
 #chatbox {
-    height: 70%;
+    height: 80%; /* Take up most of the space for chat */
     overflow-y: auto;
     padding: 20px;
     font-family: 'Courier New', monospace; /* Monospace font for a more "computer" feel */
 }
 
+#inputArea {
+    padding: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: #161b22;
+    display: flex;
+    gap: 12px;
+}
 </style>
 <body>
 
