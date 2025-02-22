@@ -6,6 +6,7 @@
     <title>AI Chatbot</title>
     <!-- Include marked.js for Markdown-to-HTML conversion -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
 <style>
 /* General Styles */
 body {
@@ -21,14 +22,13 @@ body {
     flex-direction: column;
     overflow: hidden; /* Prevent scrolling */
 }
-    
+
 #root {
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100vw; /* Set width to 100% of the viewport width */
 }
-
 
 /* Chat Container */
 #chatContainer {
@@ -226,14 +226,14 @@ body {
 <body>
 
     <div id="chatContainer">
-    <div id="chatbox">
-        <div class="message bot">Hello! How can I assist you today?</div>
+        <div id="chatbox">
+            <div class="message bot">Hello! How can I assist you today?</div>
+        </div>
+        <div id="inputArea">
+            <input type="text" id="userInput" placeholder="Type your message...">
+            <button id="sendBtn">Send</button>
+        </div>
     </div>
-    <div id="inputArea">
-        <input type="text" id="userInput" placeholder="Type your message...">
-        <button id="sendBtn">Send</button>
-    </div>
-</div>
 
     <script>
         const apiKey = "AIzaSyAhAoNftaX6t4d1UdjHw5foRh1Zifs7Qa8"; // Replace with your Gemini API key
@@ -280,6 +280,8 @@ body {
                 }
 
                 let botReply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I didn't get that.";
+                // Convert Markdown to HTML
+                botReply = marked.parse(botReply);
                 addMessage("Bot: " + botReply, "bot");
             } catch (error) {
                 console.error("Error:", error);
@@ -289,9 +291,10 @@ body {
         }
 
         function addMessage(text, sender) {
-            let messageElement = document.createElement("p");
-            messageElement.textContent = text;
+            let messageElement = document.createElement("div");
             messageElement.classList.add("message", sender);
+            // Use innerHTML to render HTML content
+            messageElement.innerHTML = text;
             chatbox.appendChild(messageElement);
             chatbox.scrollTop = chatbox.scrollHeight;
         }
@@ -304,6 +307,3 @@ body {
 
 </body>
 </html>
-
-
-
