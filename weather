@@ -1,19 +1,74 @@
-pip install requests
 
-import requests
-city = input("Enter City:")
-url = 'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={1347721688723f20e98171623fce9289}'
-res=requests.get(url)
-data = res.json()
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #282c34;
+            color: white;
+            padding: 20px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .weather-info {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
 
-humidity = data['main']['humidity']
-pressure = data['main']['pressure']
-wind = data['wind']['speed']
-description = data['weather'][0]['description']
-temp = data['main']['temp']
+    <h1>Weather App</h1>
+    <input type="text" id="cityInput" placeholder="Enter city name">
+    <button onclick="getWeather()">Get Weather</button>
 
-print('Temperature:', temp, '°C')
-print('Wind:', wind)
-print('Pressure:', pressure)
-print('Humidity:', humidity)
-print('Description:', description)
+    <div class="weather-info" id="weatherData"></div>
+
+    <script>
+        async function getWeather() {
+            const apiKey = "1347721688723f20e98171623fce9289"; // Replace with your API key
+            const city = document.getElementById("cityInput").value;
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error("City not found!");
+                }
+                const data = await response.json();
+
+                // Extract weather data
+                const temp = data.main.temp;
+                const humidity = data.main.humidity;
+                const pressure = data.main.pressure;
+                const wind = data.wind.speed;
+                const description = data.weather[0].description;
+
+                // Display the weather details
+                document.getElementById("weatherData").innerHTML = `
+                    <p><strong>Temperature:</strong> ${temp}°C</p>
+                    <p><strong>Humidity:</strong> ${humidity}%</p>
+                    <p><strong>Pressure:</strong> ${pressure} hPa</p>
+                    <p><strong>Wind Speed:</strong> ${wind} m/s</p>
+                    <p><strong>Condition:</strong> ${description}</p>
+                `;
+            } catch (error) {
+                document.getElementById("weatherData").innerHTML = `<p style="color: red;">${error.message}</p>`;
+            }
+        }
+    </script>
+
+</body>
+</html>
